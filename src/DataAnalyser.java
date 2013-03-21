@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
+
 
 public class DataAnalyser {
 
@@ -27,12 +29,13 @@ public class DataAnalyser {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
+		Locale.setDefault(Locale.forLanguageTag("et_EE"));
 		System.out.println(new Date().toGMTString());
 		long startTime = System.currentTimeMillis();
 
-		// DataAnalyser analyser = new DataAnalyser(Integer.parseInt(args[0])); // Palette size
-		// analyser.analyseData(args[2], Integer.parseInt(args[1])); // Destination folder, skip frames
-		// analyser.writeData(args[3]); // Output Filename
+		DataAnalyser analyser = new DataAnalyser(Integer.parseInt(args[0])); // Palette size
+		analyser.analyseData(args[2], Integer.parseInt(args[1])); // Destination folder, skip frames
+		analyser.writeData(args[3]); // Output Filename
 
 		System.out.println(new Date().toGMTString());
 		System.out.println("Time elapsed: " + ((System.currentTimeMillis() - startTime) / 1000) + " sec");
@@ -52,6 +55,7 @@ public class DataAnalyser {
 			BufferedImage img = ImageIO.read(new File(path + "image-" + format.format(i) + ".png"));
 			// if ((i - 1) % (skipf * 10) == 0)
 			// System.out.println("image-" + format.format(i) + ".png");
+			// Progress line (debug)
 			if ((i - 1) % 50 == 0)
 				System.out.print(".");
 
@@ -88,7 +92,5 @@ public class DataAnalyser {
 
 			writer.close();
 		}
-
 	}
-
 }

@@ -1,12 +1,16 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+
+import movie.util.NumberInstance;
 
 public class GraphDrawer {
 
@@ -18,6 +22,7 @@ public class GraphDrawer {
 	public static final int PROPORTION = 9; // Proportion of plot starting with zero
 
 	public static void main(String[] args) throws IOException {
+		Locale.setDefault(Locale.forLanguageTag("et_EE"));
 		File[] folderlist = new File("data/").listFiles();
 
 		System.out.println("MAKING PLOTS FOR EACH FILM...");
@@ -88,18 +93,24 @@ public class GraphDrawer {
 
 		GraphHelper.drawPalette(g2d, palette, 112, 555, 20);
 		GraphHelper.paintAxis(g2d, 100, 550, palette.length + 25, 500);
+		GraphHelper.axisDelimeter(g2d, 475, 100, 550, palette.length + 25, 500);
 
-		BigInteger maxValue = GraphHelper.maxValue(palette);
+		BigDecimal maxValue = new BigDecimal(GraphHelper.maxValue(palette));
 		double base = Math.pow(maxValue.doubleValue(), 1d / PROPORTION);
 
-		GraphHelper.logPaintNumbers(g2d, base, PROPORTION, 95, 553, 475);
+		GraphHelper.PaintNumbers(g2d, false, maxValue, base, 100, 550, 475);
 
 		for (int i = 0; i < palette.length; i++)
-			GraphHelper.logPaintCurPoint(g2d, 112, 550, 475, i, base, palette[i].count, PROPORTION);
+			GraphHelper.logPaintCurPoint(g2d, 112, 550, 475, i, base, palette[i].count);
+
+		Font font = new Font("Verdana", Font.TRUETYPE_FONT, 14);
+		g2d.setFont(font);
+
+		//g2d.drawString("Дисперсия: " + NumberInstance.format(StatHelper.dispersion(palette).toString()), 250, 630);
+		//g2d.drawString("Стандартное отклонение: " + NumberInstance.format(StatHelper.deviation(palette).toString()), 250, 645);
 
 		g2d.dispose();
 		ImageIO.write(logImg, "png", new File(outFilename + ".png"));
-
 	}
 
 	/** Building a linear plot */
@@ -113,13 +124,20 @@ public class GraphDrawer {
 
 		GraphHelper.drawPalette(g2d, palette, 112, 555, 20);
 		GraphHelper.paintAxis(g2d, 100, 550, palette.length + 25, 500);
+		GraphHelper.axisDelimeter(g2d, 475, 100, 550, palette.length + 25, 500);
 
-		BigInteger maxValue = GraphHelper.maxValue(palette);
-		
-		//TODO Numbers on Y Axis
+		BigDecimal maxValue = new BigDecimal(GraphHelper.maxValue(palette));
+
+		GraphHelper.PaintNumbers(g2d, true, maxValue, 0, 100, 550, 475);
 
 		for (int i = 0; i < palette.length; i++)
-			GraphHelper.paintCurPoint(g2d, 112, 550, 475, i, palette[i].count, maxValue);
+			GraphHelper.linPaintCurPoint(g2d, 112, 550, 475, i, palette[i].count, maxValue);
+
+		Font font = new Font("Verdana", Font.TRUETYPE_FONT, 14);
+		g2d.setFont(font);
+
+		//g2d.drawString("Дисперсия: " + NumberInstance.format(StatHelper.dispersion(palette).toString()), 250, 630);
+		//g2d.drawString("Стандартное отклонение: " + NumberInstance.format(StatHelper.deviation(palette).toString()), 250, 645);
 
 		g2d.dispose();
 		ImageIO.write(gImg, "png", new File(outFilename + ".png"));
