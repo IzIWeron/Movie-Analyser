@@ -30,7 +30,7 @@ public class GraphHelper {
 		g.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
 	}
 
-	/** Returns the max value in given HSBColor array */
+	/** Returns the maximum value in given HSBColor array */
 	public static BigInteger maxValue(HSBColor[] curCol) {
 		BigInteger max = BigInteger.ZERO;
 		for (int i = 0; i < curCol.length; i++)

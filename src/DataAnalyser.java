@@ -22,7 +22,7 @@ public class DataAnalyser {
 	public static final int INDEX_BRIGHT = 2;
 	public static final int INDEX_AVERAGE = 3;
 
-	/** Number of colors in palette */
+	/** Number of colors in the palette */
 	public int colors;
 
 	public HSBColor[][] hsbColors;

@@ -72,7 +72,7 @@ public class GraphDrawer {
 		// Checking if we have already created a palette
 		if (palette == null)
 			palette = GraphHelper.generateHSBColors(paletteSize, sc.nextFloat(), sc.nextFloat());
-		else { // If so then lets skip some data from input
+		else { // If so, then lets skip some data from input
 			sc.nextFloat();
 			sc.nextFloat();
 		}
