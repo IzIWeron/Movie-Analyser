@@ -1,7 +1,7 @@
 Movie-Analyser
 ==============
 
-Java programm for the research "The ratio of different colours in films and videos".
+Java programm for the research "The correlation of different colours in films and videos".
 
 The program that was written during the research made it possible to collect the colour ratio statistics of any video or film. With the help of the statistics one can now analyze the psychological influence of colours in films affecting people on the basis of a concrete not subjective data. In virtue of this work more thorough further research could be made.
 
